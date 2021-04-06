@@ -12,12 +12,12 @@ def getPathToSourceGoogleDrive(url_shared):
 def filterDataByColumn(columnName, columnValue, df):
     return df.loc[df[columnName] == columnValue]
 
-if __name__ == '__main__':    
-    dateFilter = sys.argv[0]
-    countryFilter = sys.argv[1]
+if __name__ == '__main__':  
+    countryFilter = sys.argv[1]  
+    dateFilter = sys.argv[2]    
     urlSource = getPathToSourceGoogleDrive('https://drive.google.com/file/d/1flLdb4v8qKKPN5dwTefYClFmVnumcekI/view?usp=sharing')
-    df = pd.read_csv(urlSource)    
-    df = filterDataByColumn('date', dateFilter, df)
+    df = pd.read_csv(urlSource)
     df = filterDataByColumn('country', countryFilter, df)
-    print(df)
-    
+    df = filterDataByColumn('date', dateFilter, df)            
+    result = {'Country': countryFilter, 'Date': dateFilter, 'Report': { 'Cases': df.cases.sum(), 'Deaths': df.deaths.sum() }}
+    print(result)
